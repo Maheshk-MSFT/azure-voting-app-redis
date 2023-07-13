@@ -2,18 +2,20 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+# https://learn.microsoft.com/azure/devops/pipelines/ecosystems/xcode
 
 trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'macos-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: Xcode@5
+  inputs:
+    actions: 'build'
+    scheme: ''
+    sdk: 'iphoneos'
+    configuration: 'Release'
+    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
+    xcodeVersion: 'default' # Options: 10, 11, 12, 13, 14, default, specifyPath
